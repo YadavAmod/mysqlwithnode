@@ -1,0 +1,34 @@
+//index.js file
+const express = require("express");
+const con = require("./config");
+const app = express();
+
+
+app.get("/", (req, resp) => {
+  con.query("select * from student", (err, result) => {
+    if (err) { resp.send("error in api") }
+    else { resp.send(result) }
+  })
+});
+
+
+
+app.listen("5000")
+
+//config.js file code
+const mysql = require("mysql");
+const con= mysql.createConnection({
+    host:'localhost',
+    user:'root',
+    password:"",
+    database:"student_details"
+});
+
+con.connect((err)=>{
+    if(err)
+    {
+        console.warn("error in connection")
+    }
+});
+
+module.exports =con;
